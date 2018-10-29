@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+	<head>
+		<title>Jeu du morpion</title>
+		<link type = "stylesheet" href = "css/tictactoe.css">
+	</head>
+	<body>
+		<h1>Jeu du morpion</h1>
+		
+		<h2>Etat du jeu</h2>
+		<p id = "tictactoeStatus"></p>
+		
+		<table id = "tictactoeTable" border="2" align=center>
+			<tr>
+				<td colTTT = "0"
+					cellTTT = "0"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+				<td colTTT = "0"
+					cellTTT = "1"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+				<td colTTT = "0"
+					cellTTT = "2"
+					style="width:100px;
+						   height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+			</tr>
+			<tr>
+				<td colTTT = "1"
+					cellTTT = "0"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+				<td colTTT = "1"
+					cellTTT = "1"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+				<td colTTT = "1"
+					cellTTT = "2"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+			</tr>
+			<tr>
+				<td colTTT = "2"
+					cellTTT = "0"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+				<td colTTT = "2"
+					cellTTT = "1"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+				<td colTTT = "2"
+					cellTTT = "2"
+					style="width:100px;height:100px;"
+					align="center"
+					onclick="updateGameTable(this)">
+				</td>
+			</tr>
+		</table>
+	</body>
+	<script src="javascript/functions.js"></script>
+</html>
