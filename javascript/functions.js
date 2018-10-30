@@ -36,20 +36,29 @@ function countElement(element){
  * @param {la cellule du tableau} cell 
  */
 function updateGameTable(cell){
-    if(this.innerHTML== "X" || this.innerHTML == "O"){
-        Log.console.error("Erreur : case déjà rempli!");
-        alert("Cette case a déjà été rempli!");
-    }else{
-        let player1SymbolCount = countElement("X");
-        let player2SymbolCount = countElement("O");
-
-        if(player1SymbolCount>player2SymbolCount){
-            updateCell(cell.getAttribute('colTTT'), cell.getAttribute('cellTTT'),"O");
+    var statusText = document.getElementById("tictactoeStatus").innerHTML;
+    var status = 'Fin de partie';
+    if(statusText.includes(status) == false){
+        if(this.innerHTML == 'O' || this.innerHTML == 'X'){
+            alert(this.innerHTML);
+            console.error("Erreur : case déjà rempli!");
+            alert("Cette case a déjà été rempli!");
         }else{
-            updateCell(cell.getAttribute('colTTT'), cell.getAttribute('cellTTT'),"X");
+            let player1SymbolCount = countElement("X");
+            let player2SymbolCount = countElement("O");
+    
+            if(player1SymbolCount>player2SymbolCount){
+                updateCell(cell.getAttribute('colTTT'), cell.getAttribute('cellTTT'),"O");
+            }else{
+                updateCell(cell.getAttribute('colTTT'), cell.getAttribute('cellTTT'),"X");
+            }
         }
+        var table = createArrayFromGameTable();
+        isGameFinished = checkforWinners();
+        isGameFinished = checkforDraws(table);
+    }else{
+        alert('La partie est déjà terminée!');
     }
-    checkforWinners();
 }
 
 /**
@@ -88,32 +97,32 @@ function checkforWinners(){
     console.log("Début de recherche du gagnant...");
     var gameTable = createArrayFromGameTable();
 
+    displayGameTable(gameTable);
+
     for(var i = 0; i<3; i++){
         var indexHorizontal = (3*i);
         var indexVertical = i;
-        alert(gameTable[indexHorizontal]);
-        alert(gameTable[indexHorizontal+1]);
-        alert(gameTable[indexHorizontal+2]);
         if(gameTable[indexHorizontal] === gameTable[indexHorizontal+1]
         && gameTable[indexHorizontal+1] === gameTable[indexHorizontal+2]
-        && gameTable[indexHorizontal] === "X"
-        && gameTable[indexHorizontal] === "O"){
+        && gameTable[indexHorizontal] != ''){
             console.log("Victoire par la ligne n°"+i);
-            updateStatus(gameTable[0].innerHTML);
+            console.log('Symbole :'+gameTable[0]);
+            updateStatus(gameTable[0]);
         }else if(gameTable[(3*0)+indexVertical] == gameTable[(3*1)+indexVertical]
-              && gameTable[(3*2)+indexVertical]){
+              && gameTable[(3*2)+indexVertical] && gameTable[indexVertical]!= ''){
             console.log("Victoire par la colonne n°"+i);
-            updateStatus(gameTable[0].innerHTML);
+            updateStatus(gameTable[0]);
         }
+        return true;
     }
 
-    if(gameTable[0] == gameTable[4] && gameTable[6] == gameTable[8]){
+    if(gameTable[0] == gameTable[4] && gameTable[6] == gameTable[8] && gameTable[0]!= ''){
         console.log("Victoire par la diagonale");
-        updateStatus(gameTable[0][0].innerHTML);
+        updateStatus(gameTable[0]);
     }
-    else if(gameTable[2] == gameTable[4] && gameTable[4] == gameTable[6]){
+    else if(gameTable[2] == gameTable[4] && gameTable[4] == gameTable[6] && gameTable[2]!=''){
         console.log("Victoire par la diagonale renversée.");
-        updateStatus(gameTable[0][2].innerHTML);
+        updateStatus(gameTable[2]);
     }else{
         console.log("Pas de gagnant : suite de la partie");
     }
@@ -125,12 +134,12 @@ function checkforWinners(){
  * @param {Symbole du joueur} symbol 
  */
 function updateStatus(symbol){
-    if(symbol == "X"){
-        document.getElementById("tictactoeStatus".innerHTML) == "Victoire du joueur 1!";
+    if(symbol==='X'){
+        document.getElementById("tictactoeStatus").innerHTML = "Fin de partie : Victoire du joueur 1!";
         console.log("Fin de partie : victoire du joueur n°1!");
         return true;
-    }else if(symbol == "O"){
-        document.getElementById("tictactoeStatus".innerHTML) == "Victoire du joueur 2!";
+    }else if(symbol==='O'){
+        document.getElementById("tictactoeStatus").innerHTML = "Fin de partie : Victoire du joueur 2!";
         console.log("Fin de partie : victoire du joueur n°2!");
         return true;
     }else{
@@ -138,3 +147,29 @@ function updateStatus(symbol){
         return false;
     }
 }
+
+/**
+ * Affiche la table du jeu dans la console
+ * @param {la table du jeu} gameTableArray 
+ */
+function displayGameTable(gameTableArray){
+    for(var i = 0;i<gameTableArray.length;i=i+2){
+            console.log("["+gameTableArray[i]+","+gameTableArray[i+1]+","+gameTableArray[i+2]+"]");
+    }
+}
+
+/**
+ * Vérifie si la table est remplit ou non
+ * @param {la table du jeu} gameTableArray 
+ */
+function checkforDraws(gameTableArray){
+    var count;
+    for(var i = 0;i<gameTableArray;i++){
+        if(gameTableArray[i]=='X'|| gameTableArray[i]=='O'){
+            count++;
+        }
+    }
+    return(count===gameTableArray.length)?true:false;
+}
+
+var isGameFinished = false;
