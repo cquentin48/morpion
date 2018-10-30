@@ -137,10 +137,14 @@ function updateStatus(symbol){
     if(symbol==='X'){
         document.getElementById("tictactoeStatus").innerHTML = "Fin de partie : Victoire du joueur 1!";
         console.log("Fin de partie : victoire du joueur n°1!");
+        updateScores('player1','Victories');
+        updateScores('player2','Defeats');
         return true;
     }else if(symbol==='O'){
         document.getElementById("tictactoeStatus").innerHTML = "Fin de partie : Victoire du joueur 2!";
         console.log("Fin de partie : victoire du joueur n°2!");
+        updateScores('player2','Victories');
+        updateScores('player1','Defeats');
         return true;
     }else{
         console.log("Aucun gagnant trouvé : suite de la partie")
@@ -169,7 +173,71 @@ function checkforDraws(gameTableArray){
             count++;
         }
     }
+    if(count === gameTableArray){
+        updateScores('player1','Draws');
+        updateScores('player2','Draws');
+    }
     return(count===gameTableArray.length)?true:false;
+}
+
+/**
+ * Nouvelle partie => Les scores ne seront pas réinitialisés
+ */
+function newGame(){
+    var r = confirm("Nouvelle partie?");
+    if(r == true){
+        var table = document.getElementById('tictactoeTable');
+        var colLength = table.rows.length;
+        var rowsLength = table.rows[0].cells.length;
+        for(var i = 0; i<rowsLength; i++){
+            for(var j = 0; j<colLength;j++){
+                table.rows[i].cells[j].innerHTML = '';
+            }
+        }
+        document.getElementById('tictactoeStatus').innerHTML='';
+    }
+}
+
+/**
+ * Remise à zéro des scores
+ */
+function razScores(){
+    var r = confirm("Réinitialiser les scores du jeu?");
+    console.log("Début de remise à zéro des scores des deux joueurs")
+    if(r === true){
+        var scoresTypes =['Victories','Defeats','Draws']; 
+        var playerList = ['player1', 'player2'];
+
+        for(var i = 0;i<scoresTypes.length;i++){
+            console.log("   Remise à zéro des scores du joueur n°"+i);
+            for(var j = 0;j<playerList.length;j++){
+                console.log("   Remise à zéro des "+scoresTypes[j]+" du joueur n°"+i);
+                var documentName = playerList[i]+scoresTypes[j];
+                document.getElementById(documentName).innerHTML = 0;
+            }
+        }
+    }
+}
+
+/**
+ * 
+ * @param {le label du joueur : player1 ou player2} player 
+ * @param {le type de score : victories, defeats, draws} scoreType 
+ */
+function updateScores(player, scoreType){
+    var currentScore = parseInt(document.getElementById(player+scoreType).innerHTML,10);
+    document.getElementById(player+scoreType).innerHTML = currentScore+1;
+}
+
+function checkSymbol(playerId){
+    var playerSymbol = document.getElementById(playerId+'Symbol').innerHTML;
+    if(playerSymbol.length != 1){
+        console.error("Un seul caractère autorisé!");
+        alert("Le jeu n\'autorise qu'un seul caractère comme symbole!");
+        playerSymbol="";
+    }else{
+        console.log("Choix du caractère : ok!");
+    }
 }
 
 var isGameFinished = false;
