@@ -15,17 +15,29 @@
 			</tr>
 			<tr>
 				<td>Nom du joueur :</td>
-				<td><input type = "text" id="player1Name"></td>
+				<td><input type = "text"
+						   id="player1Name"
+						   onchange="checkInput('player1Name');"
+						   value=""></td>
 				
 				<td>Nom du joueur :</td>
-				<td><input type = "text" id="player2Name"></td>
+				<td><input type = "text"
+						   id="player2Name"
+						   onchange="checkInput('player2Name');"
+						   value=""></td>
 			</tr>
 			<tr>
 				<td>Symbole:</td>
-				<td><input type = "text" id="player1Symbol"onchange="checkSymbol('player1');"></td>
+				<td><input type = "text"
+						   id="player1Symbol"
+						   onchange="checkInput('player1Symbol');"
+						   value=""></td>
 				
 				<td>Symbole:</td>
-				<td><input type = "text" id="player2Symbol"onchange="checkSymbol('player2');"></td>
+				<td><input type = "text"
+						   id="player2Symbol"
+						   onchange="checkInput('player2Symbol');"
+						   value=""></td>
 			</tr>
 			<tr>
 				<td colspan="4"style="text-align: center;">Victoires, défaites et nuls</td>
@@ -35,7 +47,7 @@
 				<td id="player1Victories">0</td>
 				
 				<td>Victoires:</td>
-				<td>0</td>
+				<td id="player2Victories">0</td>
 			</tr>
 			<tr>
 				<td>Défaites:</td>

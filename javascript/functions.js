@@ -102,26 +102,28 @@ function checkforWinners(){
     for(var i = 0; i<3; i++){
         var indexHorizontal = (3*i);
         var indexVertical = i;
-        if(gameTable[indexHorizontal] === gameTable[indexHorizontal+1]
+        if(gameTable[indexHorizontal]   === gameTable[indexHorizontal+1]
         && gameTable[indexHorizontal+1] === gameTable[indexHorizontal+2]
-        && gameTable[indexHorizontal] != ''){
+        && gameTable[indexHorizontal]   != ''){
             console.log("Victoire par la ligne n°"+i);
             console.log('Symbole :'+gameTable[0]);
-            updateStatus(gameTable[0]);
-        }else if(gameTable[(3*0)+indexVertical] == gameTable[(3*1)+indexVertical]
-              && gameTable[(3*2)+indexVertical] && gameTable[indexVertical]!= ''){
+            updateStatus(gameTable[indexVertical]);
+            return true;
+        }else if(gameTable[indexVertical]   == gameTable[3+indexVertical]
+              && gameTable[6+indexVertical] == gameTable[3+indexVertical]
+              && gameTable[indexVertical]   != ''){
             console.log("Victoire par la colonne n°"+i);
-            updateStatus(gameTable[0]);
+            updateStatus(gameTable[indexVertical]);
+            return true;
         }
-        return true;
     }
 
-    if(gameTable[0] == gameTable[4] && gameTable[6] == gameTable[8] && gameTable[0]!= ''){
-        console.log("Victoire par la diagonale");
+    if(gameTable[0] === gameTable[4] && gameTable[4] === gameTable[8] && gameTable[0]!= ''){
+        console.log("Victoire par la diagonale 1, 5 et 6");
         updateStatus(gameTable[0]);
     }
     else if(gameTable[2] == gameTable[4] && gameTable[4] == gameTable[6] && gameTable[2]!=''){
-        console.log("Victoire par la diagonale renversée.");
+        console.log("Victoire par la diagonale renversée 3, 5 et 7.");
         updateStatus(gameTable[2]);
     }else{
         console.log("Pas de gagnant : suite de la partie");
@@ -157,25 +159,29 @@ function updateStatus(symbol){
  * @param {la table du jeu} gameTableArray 
  */
 function displayGameTable(gameTableArray){
-    for(var i = 0;i<gameTableArray.length;i=i+2){
+    for(var i = 0;(i)<gameTableArray.length;i=i+3){
             console.log("["+gameTableArray[i]+","+gameTableArray[i+1]+","+gameTableArray[i+2]+"]");
     }
 }
 
 /**
- * Vérifie si la table est remplit ou non
+ * Vérifie si la table est rempli ou non
  * @param {la table du jeu} gameTableArray 
  */
 function checkforDraws(gameTableArray){
-    var count;
-    for(var i = 0;i<gameTableArray;i++){
+    console.log("Véfification si présence de match nul => Fin de partie?");
+    var count = 0;
+    for(var i = 0;i<gameTableArray.length;i++){
         if(gameTableArray[i]=='X'|| gameTableArray[i]=='O'){
             count++;
         }
     }
-    if(count === gameTableArray){
+    console.log("Taille du tableau : "+gameTableArray.length);
+    console.log("Elements comptés : " +count);
+    if(count === gameTableArray.length){
         updateScores('player1','Draws');
         updateScores('player2','Draws');
+        document.getElementById('tictactoeStatus').innerHTML = "Fin de partie : match nul!";
     }
     return(count===gameTableArray.length)?true:false;
 }
@@ -208,15 +214,16 @@ function razScores(){
         var scoresTypes =['Victories','Defeats','Draws']; 
         var playerList = ['player1', 'player2'];
 
-        for(var i = 0;i<scoresTypes.length;i++){
+        for(var i = 0;i<playerList.length;i++){
             console.log("   Remise à zéro des scores du joueur n°"+i);
-            for(var j = 0;j<playerList.length;j++){
+            for(var j = 0;j<scoresTypes.length;j++){
                 console.log("   Remise à zéro des "+scoresTypes[j]+" du joueur n°"+i);
                 var documentName = playerList[i]+scoresTypes[j];
                 document.getElementById(documentName).innerHTML = 0;
             }
         }
     }
+    newGame();
 }
 
 /**
@@ -230,14 +237,30 @@ function updateScores(player, scoreType){
 }
 
 function checkSymbol(playerId){
-    var playerSymbol = document.getElementById(playerId+'Symbol').innerHTML;
+    console.log("Vérification de l'input du joueur n°"+playerId);
+    var playerSymbol = document.getElementById(playerId+'Symbol').value;
+    alert(playerSymbol);
     if(playerSymbol.length != 1){
         console.error("Un seul caractère autorisé!");
         alert("Le jeu n\'autorise qu'un seul caractère comme symbole!");
-        playerSymbol="";
     }else{
         console.log("Choix du caractère : ok!");
+        var upperCaseSymbol = playerSymbol.toUpperCase();
+        if(upperCaseSymbol.equals(playerSymbol)){
+            switch(playerId){
+                case "player1":
+                    player1Symbol = playerSymbol;
+                    break;
+
+                case "player2":
+                    player2Symbol = playerSymbol;
+                    break;
+            }
+        }
     }
 }
-
+var player1Symbol = '';
+var player2Symbol = '';
+var player1Name = "";
+var player2Name = "";
 var isGameFinished = false;
