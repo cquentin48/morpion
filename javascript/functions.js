@@ -259,6 +259,62 @@ function checkSymbol(playerId){
         }
     }
 }
+
+function checkInput(refId){
+    console.log("Vérification de l'input du joueur n°"+refId[6]);
+    var inputValue = document.getElementById(refId).value;
+    var inputType = refId.substr(7);
+
+    if(inputValue === ''){
+        console.error("Erreur : le champs \""+inputType+"\" n'est pas remplit!");
+    }else{
+        switch(inputType){
+        case "Symbol":
+            if(inputValue.length<1){
+                console.error("Le symbole du joueur n°"+refId[7]+" ne doit faire qu'un seul caractère!");
+            }else if(!/[^a-zA-Z]/.test(word)){
+                console.error("Le symbole doit être une lettre en majuscule uniquement!");
+            }
+            else if(!inputValue.equals(inputValue.toUpperCase())){
+                console.error("Le symbole du joueur n°"+refId[7]+" doit être en majuscule!")
+            }else{
+                setPlayerInput(inputType, inputValue, playerId);
+            }
+            break;
+
+        case "Name":
+            setPlayerInput(inputType, inputValue, playerId);
+            break;
+    }
+}
+
+function setPlayerInput(inputType, inputValue, playerId){
+    switch(inputType){
+        case "Symbol":
+            switch(playerId){
+                case "Player1":
+                    player1Symbol = inputValue;
+                break;
+
+                case "Player2":
+                    player2Symbol = inputValue;
+                break;
+            }
+            break;
+
+            case "Name":
+                switch(playerId){
+                    case "Player1":
+                        player1Name = inputValue;
+                    break;
+    
+                    case "Player2":
+                        player2Name = inputValue;
+                    break;
+                }
+                break;
+    }
+}
 var player1Symbol = '';
 var player2Symbol = '';
 var player1Name = "";
