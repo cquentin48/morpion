@@ -3,6 +3,61 @@ table#tictactoeTable > tr > td{
     height: 30%;
 }
 
-body{
-    background-color: black;
+table#tictactoePlayersStatus{
+    width:325px;
+}
+
+nav {
+	text-align:justify;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    height:100%;
+    margin-left:auto;
+    margin-right:auto;
+    width:12.5%;
+    background-color: rgb(6,66,96);
+}
+
+section{
+    margin-left: -200px; /* - moitié de la largeur */
+    left: 27.5%;
+    top:50px;
+    position:absolute;
+    display:block;
+    margin-right:auto;
+    width : 75%;
+	background-color: rgb(255,255,255);
+}
+
+header>h1{
+    text-align:center;
+    vertical-align:middle;
+}
+
+header{
+    display:block;
+    top:0px;
+    right:0px;
+    position:absolute;
+    background-color: rgb(191,8,55);
+    height:50px;
+    width: 100%;
+}
+
+#operationManagment{
+    margin: 0; /* pour éviter les marges */
+	margin-left: auto;
+    margin-right: auto;
+	display: block;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    height:100%;
+    width:12.5%;
+    background-color:rgb(6,66,96);
+}
+
+nav>div>table{
+    margin: auto;
 }

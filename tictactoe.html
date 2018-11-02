@@ -1,136 +1,134 @@
 ﻿<!DOCTYPE HTML>
 <html lang="fr">
 	<head>
+		<link rel="stylesheet" type="text/css" href = "css/tictactoe.css">
+		<link rel="icon" type="image/png" href="images/favicon.png" />
 		<title>Jeu du morpion</title>
-		<link type = "stylesheet" href = "css/tictactoe.css">
 	</head>
-	<body style = "text-align: center">
-		<h1>Jeu du morpion</h1>
-
-		<h2>Joueurs</h2>
-		<table align = center border="2px">
-			<tr style="text-align: center;">
-				<td colspan="2">Joueur n°1</td>
-				<td colspan="2">Joueur n°2</td>
-			</tr>
-			<tr>
-				<td>Nom du joueur :</td>
-				<td><input type = "text"
-						   id="player1Name"
-						   onchange="checkInput('player1Name');"
-						   value=""></td>
-				
-				<td>Nom du joueur :</td>
-				<td><input type = "text"
-						   id="player2Name"
-						   onchange="checkInput('player2Name');"
-						   value=""></td>
-			</tr>
-			<tr>
-				<td>Symbole:</td>
-				<td><input type = "text"
-						   id="player1Symbol"
-						   onchange="checkInput('player1Symbol');"
-						   value=""></td>
-				
-				<td>Symbole:</td>
-				<td><input type = "text"
-						   id="player2Symbol"
-						   onchange="checkInput('player2Symbol');"
-						   value=""></td>
-			</tr>
-			<tr>
-				<td colspan="4"style="text-align: center;">Victoires, défaites et nuls</td>
-			</tr>
-			<tr>
-				<td>Victoires:</td>
-				<td id="player1Victories">0</td>
-				
-				<td>Victoires:</td>
-				<td id="player2Victories">0</td>
-			</tr>
-			<tr>
-				<td>Défaites:</td>
-				<td id="player1Defeats">0</td>
-				
-				<td>Défaites:</td>
-				<td id="player2Defeats">0</td>
-			</tr>
-			<tr>
-				<td>Nuls:</td>
-				<td id="player1Draws">0</td>
-				
-				<td >Nuls:</td>
-				<td id="player2Draws">0</td>
-			</tr>
-		</table>
+	<body>
+		<header border="2px">
+			<h1>Jeu du morpion</h1>
+		</header>
+		<section style = "text-align: center">
+			<h2>Joueurs</h2>
+			<table id = "tictactoePlayersStatus" align = center border="2px">
+				<tr style="text-align: center;">
+					<td colspan="2">Joueur n°1</td>
+					<td colspan="2">Joueur n°2</td>
+				</tr>
+				<tr>
+					<td colspan="4"style="text-align: center;">Victoires, défaites et nuls</td>
+				</tr>
+				<tr>
+					<td>Victoires:</td>
+					<td id="player1Victories">0</td>
+					
+					<td>Victoires:</td>
+					<td id="player2Victories">0</td>
+				</tr>
+				<tr>
+					<td>Défaites:</td>
+					<td id="player1Defeats">0</td>
+					
+					<td>Défaites:</td>
+					<td id="player2Defeats">0</td>
+				</tr>
+				<tr>
+					<td>Nuls:</td>
+					<td id="player1Draws">0</td>
+					
+					<td >Nuls:</td>
+					<td id="player2Draws">0</td>
+				</tr>
+			</table>
+			
+			<h2>Etat du jeu</h2>
+			<p id = "tictactoeStatus"></p>
+			
+			<table id = "tictactoeTable" border="2" align=center>
+				<tr>
+					<td colTTT = "0"
+						cellTTT = "0"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+					<td colTTT = "0"
+						cellTTT = "1"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+					<td colTTT = "0"
+						cellTTT = "2"
+						style="width:100px;
+							height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+				</tr>
+				<tr>
+					<td colTTT = "1"
+						cellTTT = "0"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+					<td colTTT = "1"
+						cellTTT = "1"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+					<td colTTT = "1"
+						cellTTT = "2"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+				</tr>
+				<tr>
+					<td colTTT = "2"
+						cellTTT = "0"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+					<td colTTT = "2"
+						cellTTT = "1"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+					<td colTTT = "2"
+						cellTTT = "2"
+						style="width:100px;height:100px;"
+						align="center"
+						onclick="updateGameTable(this)"></td>
+				</tr>
+			</table>
+		</section>
+	
+		<nav>
+			<h3>Résultat des parties</h3>
+			<table id = "tictactoeResults" border="2">
+				<tr style="display:none;">
+					<td>Partie n°</td>
+					<td>Gagnant</td>
+					<td>Type de victoire</td>
+				</tr>
+				<tr>
+					<td colspan = "3">Aucune partie finie!</td>
+				</tr>
+			</table>
+		</nav>
+			<div id = "operationManagment">
+				<h2>Opérations</h2>
+	
+				<table align = center>
+					<tr>
+						<td><input type = "button" onclick="newGame();" value="Réinitialiser le jeu"></td>
+					</tr>
+					<tr>
+						<td><input type = "button" onclick="razScores();" value="Réinitialiser les scores"></td>
+					</tr>
+				</table>
+			</div>
 		
-		<h2>Etat du jeu</h2>
-		<p id = "tictactoeStatus"></p>
-		
-		<table id = "tictactoeTable" border="2" align=center>
-			<tr>
-				<td colTTT = "0"
-					cellTTT = "0"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-				<td colTTT = "0"
-					cellTTT = "1"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-				<td colTTT = "0"
-					cellTTT = "2"
-					style="width:100px;
-						   height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-			</tr>
-			<tr>
-				<td colTTT = "1"
-					cellTTT = "0"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-				<td colTTT = "1"
-					cellTTT = "1"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-				<td colTTT = "1"
-					cellTTT = "2"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-			</tr>
-			<tr>
-				<td colTTT = "2"
-					cellTTT = "0"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-				<td colTTT = "2"
-					cellTTT = "1"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-				<td colTTT = "2"
-					cellTTT = "2"
-					style="width:100px;height:100px;"
-					align="center"
-					onclick="updateGameTable(this)"></td>
-			</tr>
-		</table>
+		<footer>
+		</footer>
 	</body>
-
-	<h2>Opérations</h2>
-
-	<table align = center>
-		<tr>
-			<td><input type = "button" onclick="newGame();" value="Réinitialiser le jeu"></td>
-			<td><input type = "button" onclick="razScores();" value="Réinitialiser les scores"></td>
-		</tr>
-	</table>
 	<script src="javascript/functions.js"></script> 
 </html>
